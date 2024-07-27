@@ -1,0 +1,1 @@
+https://www.st.com/resource/en/datasheet/lis2mdl.pdf
