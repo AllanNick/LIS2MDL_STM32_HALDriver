@@ -7,6 +7,31 @@ LIS2MDL_STM32_HALDriver
  Allan_Nick 2024
 */
 
+//HEADERS:
+/*
+#include "math.h"
+#include "stdint.h"
+
+#define PI 3.2415926
+
+uint8_t HUMI = 0;
+uint8_t REGHXVAL = 0;
+uint8_t REGLXVAL = 0;
+uint8_t REGHYVAL = 0;
+uint8_t REGLYVAL = 0;
+
+uint8_t CONFIGA = 0x88;
+
+int16_t COMPASSX = 0;
+int16_t COMPASSY = 0;
+
+float COMPASS_VAL = 0;
+
+void LIS2MDL_Init(I2C_HandleTypeDef *hi2c);
+void LIS2MDL_DataUpdate(I2C_HandleTypeDef *hi2c, uint8_t *REGHXVAL, uint8_t *REGHYVAL, uint8_t *REGLXVAL, uint8_t *REGLYVAL);
+void LIS2MDL_CalcAngle(int16_t *IN_X, int16_t *IN_Y, float *RES_CONTAINER);
+*/
+
 void LIS2MDL_Init(I2C_HandleTypeDef *hi2c){
   HAL_I2C_Mem_Read(hi2c, 0x3C, 0x4F, I2C_MEMADD_SIZE_8BIT, &HUMI, 1, 0xFF);
   //VALUE IN WHO_AM_I REGISTER WAS 64 [DEC]
@@ -35,7 +60,7 @@ void LIS2MDL_CalcAngle(int16_t *IN_X, int16_t *IN_Y, float *RES_CONTAINER){
   float theta_degrees = theta_radius * (180 / PI);
 
   //*RES_CONTAINER = fmod((theta_degrees + 360), 360);
-  *RES_CONTAINER = theta_degrees;
+  *RES_CONTAINER = theta_degrees/*+180*/; 
 }
 /*Parameters can also exchange to an uint8_t array*/
 void LIS2MDL_DataUpdate(I2C_HandleTypeDef *hi2c, uint8_t *REGHXVAL, uint8_t *REGHYVAL, uint8_t *REGLXVAL, uint8_t *REGLYVAL){
@@ -45,8 +70,8 @@ void LIS2MDL_DataUpdate(I2C_HandleTypeDef *hi2c, uint8_t *REGHXVAL, uint8_t *REG
     HAL_I2C_Mem_Read(hi2c, 0x3C, 0x6B, I2C_MEMADD_SIZE_8BIT, REGHYVAL, 1, 0xFF);
     HAL_I2C_Mem_Read(hi2c, 0x3C, 0x6A, I2C_MEMADD_SIZE_8BIT, REGLYVAL, 1, 0xFF);
   
-    COMPASSX = REGHXVAL << 8 | REGLXVAL;
-    COMPASSY = REGHYVAL << 8 | REGLYVAL;
+    COMPASSX = *REGHXVAL << 8 | *REGLXVAL;
+    COMPASSY = *REGHYVAL << 8 | *REGLYVAL;
 }
 
 /*Example application:*/

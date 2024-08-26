@@ -17,4 +17,5 @@ int16_t COMPASSY = 0;
 float COMPASS_VAL = 0;
 
 void LIS2MDL_Init(I2C_HandleTypeDef *hi2c);
+void LIS2MDL_DataUpdate(I2C_HandleTypeDef *hi2c, uint8_t *REGHXVAL, uint8_t *REGHYVAL, uint8_t *REGLXVAL, uint8_t *REGLYVAL);
 void LIS2MDL_CalcAngle(int16_t *IN_X, int16_t *IN_Y, float *RES_CONTAINER);
