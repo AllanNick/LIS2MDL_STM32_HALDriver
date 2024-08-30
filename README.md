@@ -17,3 +17,4 @@ l__Inc
     l__ ...
 
 !Remind to modify CMakeLists.txt if you arn't placing the driver in a path excepted ./Inc and ./Src
+Like: include_directories(./PrivateDrivers)
