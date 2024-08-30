@@ -1,4 +1,5 @@
 #include "stdint.h"
+#include "LIS2MDL_Driver.h"
 
 #define PI 3.2415926
 
@@ -55,12 +56,14 @@ For performance issue, suggest to run code on
 F4 or other MCU Series which contains FPU with higher performence
 */
 void LIS2MDL_CalcAngle(int16_t *IN_X, int16_t *IN_Y, float *RES_CONTAINER){
-  float theta_radius = atan2(*IN_X, *IN_Y);
+  float CalcIN_X = (*IN_X+300) *0.0125663704;
+  float CalcIN_Y = (*IN_Y+400) *0.0125663704;
+  float theta_radius = atan2(CalcIN_Y, CalcIN_X) *180;
 
-  float theta_degrees = theta_radius * (180 / PI);
+  float theta_degrees = (theta_radius / PI)*2.2;
 
   //*RES_CONTAINER = fmod((theta_degrees + 360), 360);
-  *RES_CONTAINER = theta_degrees/*+180*/; 
+  *RES_CONTAINER = fmod(theta_degrees+360, 360); 
 }
 /*Parameters can also exchange to an uint8_t array*/
 void LIS2MDL_DataUpdate(I2C_HandleTypeDef *hi2c, uint8_t *REGHXVAL, uint8_t *REGHYVAL, uint8_t *REGLXVAL, uint8_t *REGLYVAL){
