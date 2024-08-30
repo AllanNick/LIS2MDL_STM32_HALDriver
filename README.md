@@ -7,12 +7,13 @@ Environment: STM32 Cube, CMake, Arm-none-eabi-gcc, GDB
 To Use this Driver, copy files LIS2MDL_Driver.c and LIS2MDL_Driver.h to ./Src and ./Inc which in your project folder.
 
 ProjectFolder
-|__CMakeLists.txt
-|__Src
-|   |__main.c
-|   |__LIS2MDL_Driver.c
-|   |__ ...
-|__Inc
-    |__LIS2MDL_Driver.h
-    |__ ...
+l__CMakeLists.txt
+l__Src
+l   l__main.c
+l   l__LIS2MDL_Driver.c
+l   l__ ...
+l__Inc
+    l__LIS2MDL_Driver.h
+    l__ ...
+
 !Remind to modify CMakeLists.txt if you arn't placing the driver in a path excepted ./Inc and ./Src
